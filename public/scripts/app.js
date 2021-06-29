@@ -27,7 +27,10 @@ var TodoApp = function (_React$Component) {
       return React.createElement(
         "div",
         null,
-        React.createElement(Header, { title: title, subtitle: title })
+        React.createElement(Header, { title: title, subtitle: subtitle }),
+        React.createElement(Action, null),
+        React.createElement(Options, { options: options }),
+        React.createElement(AddOption, null)
       );
     }
   }]);

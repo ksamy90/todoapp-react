@@ -6,7 +6,10 @@ class TodoApp extends React.Component {
 
     return (
       <div>
-        <Header title={title} subtitle={title} />
+        <Header title={title} subtitle={subtitle} />
+        <Action />
+        <Options options={options} />
+        <AddOption />
       </div>
     );
   }
