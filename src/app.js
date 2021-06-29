@@ -1,9 +1,23 @@
+class TodoApp extends React.Component {
+  render() {
+    const title = "TodoApp React";
+    const subtitle = "awesome react todos";
+    const options = ["thing one", "thing two", "thing three"];
+
+    return (
+      <div>
+        <Header title={title} subtitle={title} />
+      </div>
+    );
+  }
+}
+
 class Header extends React.Component {
   render() {
     return (
       <div>
-        <h1>TodoApp</h1>
-        <p>awesome todos</p>
+        <h1>{this.props.title}</h1>
+        <p>{this.props.subtitle}</p>
       </div>
     );
   }
@@ -31,13 +45,4 @@ class AddOption extends React.Component {
   }
 }
 
-const jsx = (
-  <div>
-    <Header />
-    <Action />
-    <Options />
-    <AddOption />
-  </div>
-);
-
-ReactDOM.render(jsx, document.getElementById("app"));
+ReactDOM.render(<TodoApp />, document.getElementById("app"));
