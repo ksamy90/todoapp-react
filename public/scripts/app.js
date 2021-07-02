@@ -18,6 +18,7 @@ var TodoApp = function (_React$Component) {
 
     _this.handlePick = _this.handlePick.bind(_this);
     _this.handleRemoveAll = _this.handleRemoveAll.bind(_this);
+    _this.handleAddOption = _this.handleAddOption.bind(_this);
     _this.state = {
       options: []
     };
@@ -25,6 +26,20 @@ var TodoApp = function (_React$Component) {
   }
 
   _createClass(TodoApp, [{
+    key: "handleAddOption",
+    value: function handleAddOption(option) {
+      if (!option) {
+        return "Enter valid value to add item";
+      } else if (this.state.options.indexOf(option) > -1) {
+        return "this option already exists";
+      }
+      this.setState(function (prevState) {
+        return {
+          options: prevState.options.concat(option)
+        };
+      });
+    }
+  }, {
     key: "handleRemoveAll",
     value: function handleRemoveAll() {
       this.setState(function () {
@@ -58,7 +73,7 @@ var TodoApp = function (_React$Component) {
           options: this.state.options,
           handleDeleteOptions: this.handleRemoveAll
         }),
-        React.createElement(AddOption, null)
+        React.createElement(AddOption, { addOption: this.handleAddOption })
       );
     }
   }]);
@@ -201,7 +216,7 @@ var AddOption = function (_React$Component6) {
     value: function handleAddOption(e) {
       e.preventDefault();
       var option = e.target.elements.option.value.trim();
-      var value = this.props.handleAddOption(option);
+      var value = this.props.addOption(option);
       this.setState(function () {
         return {
           optionValue: value

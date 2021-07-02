@@ -3,9 +3,22 @@ class TodoApp extends React.Component {
     super(props);
     this.handlePick = this.handlePick.bind(this);
     this.handleRemoveAll = this.handleRemoveAll.bind(this);
+    this.handleAddOption = this.handleAddOption.bind(this);
     this.state = {
       options: [],
     };
+  }
+  handleAddOption(option) {
+    if (!option) {
+      return "Enter valid value to add item";
+    } else if (this.state.options.indexOf(option) > -1) {
+      return "this option already exists";
+    }
+    this.setState((prevState) => {
+      return {
+        options: prevState.options.concat(option),
+      };
+    });
   }
   handleRemoveAll() {
     this.setState(() => {
@@ -34,7 +47,7 @@ class TodoApp extends React.Component {
           options={this.state.options}
           handleDeleteOptions={this.handleRemoveAll}
         />
-        <AddOption />
+        <AddOption addOption={this.handleAddOption} />
       </div>
     );
   }
@@ -96,7 +109,7 @@ class AddOption extends React.Component {
   handleAddOption(e) {
     e.preventDefault();
     const option = e.target.elements.option.value.trim();
-    const value = this.props.handleAddOption(option);
+    const value = this.props.addOption(option);
     this.setState(() => {
       return {
         optionValue: value,
