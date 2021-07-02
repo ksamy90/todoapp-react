@@ -5,7 +5,7 @@ class TodoApp extends React.Component {
     this.handleRemoveAll = this.handleRemoveAll.bind(this);
     this.handleAddOption = this.handleAddOption.bind(this);
     this.state = {
-      options: ["thing one", "thing two", "thing three"],
+      options: [],
     };
   }
   handleRemoveAll() {

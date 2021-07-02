@@ -20,7 +20,7 @@ var TodoApp = function (_React$Component) {
     _this.handleRemoveAll = _this.handleRemoveAll.bind(_this);
     _this.handleAddOption = _this.handleAddOption.bind(_this);
     _this.state = {
-      options: ["thing one", "thing two", "thing three"]
+      options: []
     };
     return _this;
   }
