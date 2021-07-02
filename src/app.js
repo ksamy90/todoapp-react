@@ -86,17 +86,27 @@ class Option extends React.Component {
 }
 
 class AddOption extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleAddOption = this.handleAddOption.bind(this);
+    this.state = {
+      optionValue: undefined,
+    };
+  }
   handleAddOption(e) {
     e.preventDefault();
     const option = e.target.elements.option.value.trim();
-    if (option) {
-      alert(option);
-    }
-    e.target.elements.option.value = "";
+    const value = this.props.handleAddOption(option);
+    this.setState(() => {
+      return {
+        optionValue: value,
+      };
+    });
   }
   render() {
     return (
       <div>
+        {this.state.optionValue && <p>{this.state.optionValue}</p>}
         <form onSubmit={this.handleAddOption}>
           <input type="text" name="option" autoComplete="off" />
           <button>add option</button>
