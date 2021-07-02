@@ -18,7 +18,6 @@ var TodoApp = function (_React$Component) {
 
     _this.handlePick = _this.handlePick.bind(_this);
     _this.handleRemoveAll = _this.handleRemoveAll.bind(_this);
-    _this.handleAddOption = _this.handleAddOption.bind(_this);
     _this.state = {
       options: []
     };
@@ -42,20 +41,6 @@ var TodoApp = function (_React$Component) {
       alert(option);
     }
   }, {
-    key: "handleAddOption",
-    value: function handleAddOption(option) {
-      if (!option) {
-        return "Enter valid value to add item";
-      } else if (this.state.options.indexOf(option) > -1) {
-        return "this option already exists";
-      }
-      this.setState(function (prevState) {
-        return {
-          options: prevState.options.concat(option)
-        };
-      });
-    }
-  }, {
     key: "render",
     value: function render() {
       var title = "TodoApp React";
@@ -73,7 +58,7 @@ var TodoApp = function (_React$Component) {
           options: this.state.options,
           handleDeleteOptions: this.handleRemoveAll
         }),
-        React.createElement(AddOption, { addOption: this.handleAddOption })
+        React.createElement(AddOption, null)
       );
     }
   }]);
@@ -199,16 +184,10 @@ var Option = function (_React$Component5) {
 var AddOption = function (_React$Component6) {
   _inherits(AddOption, _React$Component6);
 
-  function AddOption(props) {
+  function AddOption() {
     _classCallCheck(this, AddOption);
 
-    var _this6 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
-
-    _this6.handleAddOption = _this6.handleAddOption.bind(_this6);
-    _this6.state = {
-      optionValue: undefined
-    };
-    return _this6;
+    return _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).apply(this, arguments));
   }
 
   _createClass(AddOption, [{
@@ -216,12 +195,9 @@ var AddOption = function (_React$Component6) {
     value: function handleAddOption(e) {
       e.preventDefault();
       var option = e.target.elements.option.value.trim();
-      var value = this.props.addOption(option);
-      this.setState(function () {
-        return {
-          optionValue: value
-        };
-      });
+      if (option) {
+        alert(option);
+      }
       e.target.elements.option.value = "";
     }
   }, {
@@ -230,11 +206,6 @@ var AddOption = function (_React$Component6) {
       return React.createElement(
         "div",
         null,
-        this.state.optionValue && React.createElement(
-          "p",
-          null,
-          this.state.optionValue
-        ),
         React.createElement(
           "form",
           { onSubmit: this.handleAddOption },

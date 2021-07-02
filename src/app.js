@@ -3,7 +3,6 @@ class TodoApp extends React.Component {
     super(props);
     this.handlePick = this.handlePick.bind(this);
     this.handleRemoveAll = this.handleRemoveAll.bind(this);
-    this.handleAddOption = this.handleAddOption.bind(this);
     this.state = {
       options: [],
     };
@@ -20,18 +19,6 @@ class TodoApp extends React.Component {
     const option = this.state.options[randomNumber];
     alert(option);
   }
-  handleAddOption(option) {
-    if (!option) {
-      return "Enter valid value to add item";
-    } else if (this.state.options.indexOf(option) > -1) {
-      return "this option already exists";
-    }
-    this.setState((prevState) => {
-      return {
-        options: prevState.options.concat(option),
-      };
-    });
-  }
   render() {
     const title = "TodoApp React";
     const subtitle = "awesome react todos";
@@ -47,7 +34,7 @@ class TodoApp extends React.Component {
           options={this.state.options}
           handleDeleteOptions={this.handleRemoveAll}
         />
-        <AddOption addOption={this.handleAddOption} />
+        <AddOption />
       </div>
     );
   }
@@ -99,28 +86,17 @@ class Option extends React.Component {
 }
 
 class AddOption extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleAddOption = this.handleAddOption.bind(this);
-    this.state = {
-      optionValue: undefined,
-    };
-  }
   handleAddOption(e) {
     e.preventDefault();
     const option = e.target.elements.option.value.trim();
-    const value = this.props.addOption(option);
-    this.setState(() => {
-      return {
-        optionValue: value,
-      };
-    });
+    if (option) {
+      alert(option);
+    }
     e.target.elements.option.value = "";
   }
   render() {
     return (
       <div>
-        {this.state.optionValue && <p>{this.state.optionValue}</p>}
         <form onSubmit={this.handleAddOption}>
           <input type="text" name="option" autoComplete="off" />
           <button>add option</button>
