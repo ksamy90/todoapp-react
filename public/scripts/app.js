@@ -19,6 +19,7 @@ var TodoApp = function (_React$Component) {
     _this.handlePick = _this.handlePick.bind(_this);
     _this.handleRemoveAll = _this.handleRemoveAll.bind(_this);
     _this.handleAddOption = _this.handleAddOption.bind(_this);
+    _this.handleRemoveOption = _this.handleRemoveOption.bind(_this);
     _this.state = {
       options: []
     };
@@ -49,6 +50,17 @@ var TodoApp = function (_React$Component) {
       });
     }
   }, {
+    key: "handleRemoveOption",
+    value: function handleRemoveOption(itemToRemove) {
+      this.setState(function (prevState) {
+        return {
+          options: prevState.options.filter(function (option) {
+            return itemToRemove !== option;
+          })
+        };
+      });
+    }
+  }, {
     key: "handlePick",
     value: function handlePick() {
       var randomNumber = Math.floor(Math.random() * this.state.options.length);
@@ -56,8 +68,34 @@ var TodoApp = function (_React$Component) {
       alert(option);
     }
   }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      try {
+        var fetchTodos = localStorage.getItem("options");
+        var todoItems = JSON.parse(fetchTodos);
+        if (todoItems) {
+          this.setState(function () {
+            return {
+              options: todoItems
+            };
+          });
+        }
+      } catch (error) {
+        console.log("no todos were found");
+      }
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (prevState.options.length !== this.state.options.length) {
+        var todoItem = JSON.stringify(this.state.options);
+        localStorage.setItem("options", todoItem);
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
+      console.log("render elements");
       var title = "TodoApp React";
       var subtitle = "awesome react todos";
 
@@ -71,7 +109,8 @@ var TodoApp = function (_React$Component) {
         }),
         React.createElement(Options, {
           options: this.state.options,
-          handleDeleteOptions: this.handleRemoveAll
+          handleDeleteOptions: this.handleRemoveAll,
+          handleDeleteItem: this.handleRemoveOption
         }),
         React.createElement(AddOption, { addOption: this.handleAddOption })
       );
@@ -120,7 +159,11 @@ var Options = function Options(props) {
       "remove all"
     ),
     props.options.map(function (option) {
-      return React.createElement(Option, { key: option, optionText: option });
+      return React.createElement(Option, {
+        key: option,
+        optionText: option,
+        removeItem: props.handleDeleteItem
+      });
     })
   );
 };
@@ -129,7 +172,16 @@ var Option = function Option(props) {
   return React.createElement(
     "div",
     null,
-    props.optionText
+    props.optionText,
+    React.createElement(
+      "button",
+      {
+        onClick: function onClick() {
+          props.removeItem(props.optionText);
+        }
+      },
+      "remove"
+    )
   );
 };
 

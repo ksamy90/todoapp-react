@@ -4,6 +4,7 @@ class TodoApp extends React.Component {
     this.handlePick = this.handlePick.bind(this);
     this.handleRemoveAll = this.handleRemoveAll.bind(this);
     this.handleAddOption = this.handleAddOption.bind(this);
+    this.handleRemoveOption = this.handleRemoveOption.bind(this);
     this.state = {
       options: [],
     };
@@ -27,12 +28,42 @@ class TodoApp extends React.Component {
       };
     });
   }
+  handleRemoveOption(itemToRemove) {
+    this.setState((prevState) => {
+      return {
+        options: prevState.options.filter((option) => itemToRemove !== option),
+      };
+    });
+  }
   handlePick() {
     const randomNumber = Math.floor(Math.random() * this.state.options.length);
     const option = this.state.options[randomNumber];
     alert(option);
   }
+
+  componentDidMount() {
+    try {
+      const fetchTodos = localStorage.getItem("options");
+      const todoItems = JSON.parse(fetchTodos);
+      if (todoItems) {
+        this.setState(() => {
+          return {
+            options: todoItems,
+          };
+        });
+      }
+    } catch (error) {
+      console.log("no todos were found");
+    }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.options.length !== this.state.options.length) {
+      const todoItem = JSON.stringify(this.state.options);
+      localStorage.setItem("options", todoItem);
+    }
+  }
   render() {
+    console.log("render elements");
     const title = "TodoApp React";
     const subtitle = "awesome react todos";
 
@@ -46,6 +77,7 @@ class TodoApp extends React.Component {
         <Options
           options={this.state.options}
           handleDeleteOptions={this.handleRemoveAll}
+          handleDeleteItem={this.handleRemoveOption}
         />
         <AddOption addOption={this.handleAddOption} />
       </div>
@@ -77,14 +109,31 @@ const Options = (props) => {
     <div>
       <button onClick={props.handleDeleteOptions}>remove all</button>
       {props.options.map((option) => {
-        return <Option key={option} optionText={option} />;
+        return (
+          <Option
+            key={option}
+            optionText={option}
+            removeItem={props.handleDeleteItem}
+          />
+        );
       })}
     </div>
   );
 };
 
 const Option = (props) => {
-  return <div>{props.optionText}</div>;
+  return (
+    <div>
+      {props.optionText}
+      <button
+        onClick={() => {
+          props.removeItem(props.optionText);
+        }}
+      >
+        remove
+      </button>
+    </div>
+  );
 };
 
 class AddOption extends React.Component {
