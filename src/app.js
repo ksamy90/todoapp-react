@@ -53,50 +53,39 @@ class TodoApp extends React.Component {
   }
 }
 
-class Header extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>{this.props.title}</h1>
-        <p>{this.props.subtitle}</p>
-      </div>
-    );
-  }
-}
+const Header = (props) => {
+  return (
+    <div>
+      <h1>{props.title}</h1>
+      <p>{props.subtitle}</p>
+    </div>
+  );
+};
 
-class Action extends React.Component {
-  render() {
-    return (
-      <div>
-        <button
-          disabled={!this.props.hasOptions}
-          onClick={this.props.pickOption}
-        >
-          What should I do?
-        </button>
-      </div>
-    );
-  }
-}
+const Action = (props) => {
+  return (
+    <div>
+      <button disabled={!props.hasOptions} onClick={props.pickOption}>
+        What should I do?
+      </button>
+    </div>
+  );
+};
 
-class Options extends React.Component {
-  render() {
-    return (
-      <div>
-        <button onClick={this.props.handleDeleteOptions}>remove all</button>
-        {this.props.options.map((option) => {
-          return <Option key={option} optionText={option} />;
-        })}
-      </div>
-    );
-  }
-}
+const Options = (props) => {
+  return (
+    <div>
+      <button onClick={props.handleDeleteOptions}>remove all</button>
+      {props.options.map((option) => {
+        return <Option key={option} optionText={option} />;
+      })}
+    </div>
+  );
+};
 
-class Option extends React.Component {
-  render() {
-    return <div>{this.props.optionText}</div>;
-  }
-}
+const Option = (props) => {
+  return <div>{props.optionText}</div>;
+};
 
 class AddOption extends React.Component {
   constructor(props) {
@@ -115,6 +104,7 @@ class AddOption extends React.Component {
         optionValue: value,
       };
     });
+    e.target.elements.option.value = "";
   }
   render() {
     return (
