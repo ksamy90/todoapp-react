@@ -81,7 +81,7 @@ var TodoApp = function (_React$Component) {
           });
         }
       } catch (error) {
-        console.log("no todos were found");
+        console.log(error, "no todos were found");
       }
     }
   }, {
