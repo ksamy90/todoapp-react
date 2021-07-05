@@ -69,7 +69,7 @@ class TodoApp extends React.Component {
     }
   }
   render() {
-    console.log("render elements");
+    console.log("render react elements");
     const title = "TodoApp React";
     const subtitle = "awesome react todos";
 
