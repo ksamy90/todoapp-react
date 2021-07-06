@@ -3,6 +3,7 @@ import AddOption from "./AddOption";
 import Action from "./Action";
 import Header from "./Header";
 import Options from "./Options";
+import OptionModal from "./OptionModal";
 
 class TodoApp extends React.Component {
   constructor(props) {
@@ -11,9 +12,18 @@ class TodoApp extends React.Component {
     this.handleRemoveAll = this.handleRemoveAll.bind(this);
     this.handleAddOption = this.handleAddOption.bind(this);
     this.handleRemoveOption = this.handleRemoveOption.bind(this);
+    this.handleClearOption = this.handleClearOption.bind(this);
     this.state = {
       options: [],
+      selectedOption: undefined,
     };
+  }
+  handleClearOption() {
+    this.setState(() => {
+      return {
+        selectedOption: undefined,
+      };
+    });
   }
   handleAddOption(option) {
     if (!option) {
@@ -44,7 +54,11 @@ class TodoApp extends React.Component {
   handlePick() {
     const randomNumber = Math.floor(Math.random() * this.state.options.length);
     const option = this.state.options[randomNumber];
-    alert(option);
+    this.setState(() => {
+      return {
+        selectedOption: option,
+      };
+    });
   }
 
   componentDidMount() {
@@ -86,6 +100,10 @@ class TodoApp extends React.Component {
           handleDeleteItem={this.handleRemoveOption}
         />
         <AddOption addOption={this.handleAddOption} />
+        <OptionModal
+          selectOption={this.state.selectedOption}
+          clearOption={this.handleClearOption}
+        />
       </div>
     );
   }
