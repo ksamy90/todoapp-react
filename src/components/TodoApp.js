@@ -95,12 +95,14 @@ class TodoApp extends React.Component {
             hasOptions={this.state.options.length > 0}
             pickOption={this.handlePick}
           />
-          <Options
-            options={this.state.options}
-            handleDeleteOptions={this.handleRemoveAll}
-            handleDeleteItem={this.handleRemoveOption}
-          />
-          <AddOption addOption={this.handleAddOption} />
+          <div className="widget">
+            <Options
+              options={this.state.options}
+              handleDeleteOptions={this.handleRemoveAll}
+              handleDeleteItem={this.handleRemoveOption}
+            />
+            <AddOption addOption={this.handleAddOption} />
+          </div>
           <OptionModal
             selectOption={this.state.selectedOption}
             clearOption={this.handleClearOption}
