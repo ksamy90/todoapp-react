@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "babel": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch",
-    "build": "webpack --watch",
+    "build-dev": "webpack",
+    "build-prod": "webpack -p --env production",
     "serve": "live-server public/",
     "dev-server": "webpack-dev-server"
   },
@@ -18,6 +19,7 @@
     "babel-preset-env": "^1.5.2",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.4",
+    "express": "^4.18.2",
     "live-server": "^1.2.0",
     "node-sass": "^6.0.1",
     "react": "^16.1.1",
